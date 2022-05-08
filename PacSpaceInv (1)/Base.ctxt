@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=Base
+comment1.params=x\ y\ xsiz\ ysiz
+comment1.target=Base(int,\ int,\ int,\ int)
+numComments=2

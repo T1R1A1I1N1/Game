@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Tile
+comment1.params=x\ y\ c
+comment1.target=Tile(int,\ int,\ java.awt.Color)
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3

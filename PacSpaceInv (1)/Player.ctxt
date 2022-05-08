@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=x\ y\ xsiz\ ysiz
+comment1.target=Player(int,\ int,\ int,\ int)
+numComments=2
