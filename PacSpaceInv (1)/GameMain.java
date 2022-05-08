@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GameMain implements ActionListener, KeyListener
 {
   JFrame f1;
-  JPanel main, sub;
+  JPanel main, sub, top;
   GameGraph g1;
   JButton b1,b2;
   boolean endgame,start;
@@ -14,6 +14,7 @@ public class GameMain implements ActionListener, KeyListener
   Player p;
   Sword s;
   ArrayList<Enemy> bad;
+  Hpgraph hg;
   public GameMain()
   {
     makeMap();
@@ -25,18 +26,18 @@ public class GameMain implements ActionListener, KeyListener
     map = new Tile[18][18];
     for(int i = 1; i < map.length-1; i++){
     for(int j = 1; j < map.length-1; j++){
-    map[i][j] = new NormalTile(i*40,j*40);}}
+    map[i][j] = new NormalTile(i*30,j*30);}}
     for(int i = 0; i < map.length; i++){
-      map[0][i] = new WallTile(0,i*40);
-      map[17][i] = new WallTile(680,i*40);
-      map[i][0] = new WallTile(i*40,0);
-      map[i][17] = new WallTile(i*40,680);
+      map[0][i] = new WallTile(0,i*30);
+      map[17][i] = new WallTile(510,i*30);
+      map[i][0] = new WallTile(i*30,0);
+      map[i][17] = new WallTile(i*30,510);
     }
     }
   private void setPanel()
   {
     f1 = new JFrame("Graphics Example");
-      f1.setSize(800,800);
+      f1.setSize(600,800);
       f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     Container c1 = f1.getContentPane();
     
@@ -49,25 +50,33 @@ public class GameMain implements ActionListener, KeyListener
     g1 = new GameGraph(map,p,s,bad);
       g1.addKeyListener(this);  
       
+    hg = new Hpgraph(p);
+    
     sub = new JPanel(); 
       sub.add(b1);
       sub.add(b2);
-    
+      //sub.add(hg);
+      
+    top = new JPanel();
+      top.add(hg);
+      top.setSize(100,50);
     
     main = new JPanel();
       main.setLayout(new BorderLayout());          
-      main.setSize(600,600);
+      main.setSize(500,500);
       main.add(g1,BorderLayout.CENTER);
       main.add(sub,BorderLayout.SOUTH);
+      main.add(top,BorderLayout.NORTH);
     c1.add(main);
     f1.show();
+    f1.setResizable(false);
   }
   private void setVariables()
   {
-    p = new Player(200,200,30,30);
+    p = new Player(200,200,30,30,3,5);
     s = new Sword(p);
     bad = new ArrayList<Enemy>();
-    bad.add(new Enemy(150,400,30,30));
+    bad.add(new Enemy(150,400,30,30,2,3));
   }
   private void game()
   {
@@ -85,13 +94,17 @@ public class GameMain implements ActionListener, KeyListener
         imstuff();
         collision();
         g1.repaint();
+        hg.repaint();
       }
     }
   }
   
   private void imstuff(){
-    for(Enemy b: bad){b.stuff();}
+    for(int i = 0; i < bad.size(); i++){bad.get(i).stuff();
+    if(bad.get(i).hp <=0) {bad.remove(i);
+    i--;}}
     p.stuff();
+    if(p.hp<=0) endgame = true;
     }
   
   private void swordStuff(){
@@ -102,8 +115,8 @@ public class GameMain implements ActionListener, KeyListener
   
   private void collision(){
     for(Enemy b: bad){
-      if(Stat.collision(p,b))p.invtim = 200;
-      if(Stat.collision(b,s) && s.appear) b.invtim = 200;
+      if(Stat.collision(p,b) && !p.inv)p.hit();
+      if(Stat.collision(b,s) && s.appear && !b.inv) b.hit();
     }
     
     }
@@ -125,29 +138,41 @@ public class GameMain implements ActionListener, KeyListener
     if(evt.getKeyCode() == 38)
      {
       //up 
-      p.y-=3;
-      if(!Stat.canMove(p,map)) p.y+=3;
+      for(int i = p.speed; i >0; i--){
+        p.y-=i;
+        if(!Stat.canMove(p,map)) p.y+=i;
+        else break;
+        }
       p.dir = "up";
      }
     if(evt.getKeyCode() == 40)
     {
       //down
-      p.y+=3;
-      if(!Stat.canMove(p,map)) p.y-=3;
+      for(int i = p.speed; i >0; i--){
+        p.y+=i;
+        if(!Stat.canMove(p,map)) p.y-=i;
+        else break;
+        }
       p.dir = "down";
     }
     if(evt.getKeyCode() == 37)
     {
        //left
-       p.x-=3;
-       if(!Stat.canMove(p,map)) p.x+=3;
+       for(int i = p.speed; i >0; i--){
+        p.x-=i;
+        if(!Stat.canMove(p,map)) p.x+=i;
+        else break;
+        }
        p.dir ="left";
     }
     if(evt.getKeyCode() == 39)
     {
        //right
-       p.x+=3;
-       if(!Stat.canMove(p,map)) p.x-=3;
+       for(int i = p.speed; i >0; i--){
+        p.x+=i;
+        if(!Stat.canMove(p,map)) p.x-=i;
+        else break;
+        }
        p.dir = "right";
     }
     if(evt.getKeyCode() == 32)

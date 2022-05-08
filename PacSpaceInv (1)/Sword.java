@@ -1,5 +1,5 @@
 
-public class Sword extends Moves
+public class Sword extends Base
 {
     Player p;
     int stime;

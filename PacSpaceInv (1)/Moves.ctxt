@@ -1,7 +1,9 @@
 #BlueJ class context
 comment0.target=Moves
-comment1.params=x\ y\ xsiz\ ysiz
-comment1.target=Moves(int,\ int,\ int,\ int)
+comment1.params=x\ y\ xsiz\ ysiz\ speed\ hp
+comment1.target=Moves(int,\ int,\ int,\ int,\ int,\ int)
 comment2.params=
-comment2.target=void\ stuff()
-numComments=3
+comment2.target=void\ hit()
+comment3.params=
+comment3.target=void\ stuff()
+numComments=4

@@ -1,5 +1,5 @@
 #BlueJ class context
 comment0.target=Enemy
-comment1.params=x\ y\ xsiz\ ysiz
-comment1.target=Enemy(int,\ int,\ int,\ int)
+comment1.params=x\ y\ xsiz\ ysiz\ speed\ hp
+comment1.target=Enemy(int,\ int,\ int,\ int,\ int,\ int)
 numComments=2
