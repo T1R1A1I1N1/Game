@@ -1,5 +1,5 @@
 
-public class Moves extends Base
+public abstract class Moves extends Base
 {
     String dir = "down";
     boolean inv;
@@ -20,4 +20,6 @@ public class Moves extends Base
       invtim--;
       inv = (invtim>0);
     }
+    
+    public abstract void fell();
 }

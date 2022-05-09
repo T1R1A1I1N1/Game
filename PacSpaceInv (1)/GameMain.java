@@ -26,7 +26,15 @@ public class GameMain implements ActionListener, KeyListener
     map = new Tile[18][18];
     for(int i = 1; i < map.length-1; i++){
     for(int j = 1; j < map.length-1; j++){
-    map[i][j] = new NormalTile(i*30,j*30);}}
+      map[i][j] = new NormalTile(i*30,j*30);}}
+    map[4][4] = new LavaTile(120,120);
+    map[5][4] = new LavaTile(150,120);
+    map[4][5] = new LavaTile(120,150);
+    map[5][5] = new LavaTile(150,150);
+    map[10][10] = new WaterTile(300,300);
+    map[10][11] = new WaterTile(300,330);
+    map[11][10] = new WaterTile(330,300);
+    map[11][11] = new WaterTile(330,330);
     for(int i = 0; i < map.length; i++){
       map[0][i] = new WallTile(0,i*30);
       map[17][i] = new WallTile(510,i*30);
@@ -92,6 +100,7 @@ public class GameMain implements ActionListener, KeyListener
       {
         swordStuff();
         imstuff();
+        boxcollision();
         collision();
         g1.repaint();
         hg.repaint();
@@ -99,10 +108,25 @@ public class GameMain implements ActionListener, KeyListener
     }
   }
   
+  private void boxcollision(){
+    boolean swim = true;
+    for(Tile[] g: map){
+        for(Tile t: g){
+        if(Stat.collision(t,p)) {
+          if(t.toString().equals("spike")) p.hit();
+          if(!t.toString().equals("water")) swim = false;
+        }
+      }
+    }
+    p.swim = swim;
+    
+  }
+  
   private void imstuff(){
     for(int i = 0; i < bad.size(); i++){bad.get(i).stuff();
-    if(bad.get(i).hp <=0) {bad.remove(i);
-    i--;}}
+      if(bad.get(i).hp <=0) {bad.remove(i);
+      i--;}
+    }
     p.stuff();
     if(p.hp<=0) endgame = true;
     }

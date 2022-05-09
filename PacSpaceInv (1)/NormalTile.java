@@ -7,7 +7,7 @@ public class NormalTile extends Tile
     
     public NormalTile(int x, int y)
     {
-        super(x,y,Color.black);
+        super(x,y,new Color(102,255,102));
     }
 
     public String toString(){return "normal";}

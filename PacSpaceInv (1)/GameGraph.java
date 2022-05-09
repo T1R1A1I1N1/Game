@@ -22,11 +22,14 @@ public class GameGraph  extends JPanel
         for(Tile[] h : map){
           for(Tile d : h){
             g.setColor(d.c);
+            g.fillRect(d.x,d.y,d.xsiz,d.ysiz);
+            g.setColor(Color.black);
             g.drawRect(d.x,d.y,d.xsiz,d.ysiz);
             }
         }
         if(p.inv) g.setColor(Color.green);
         else g.setColor(Color.blue);
+        if(p.swim) g.setColor(new Color(0,0,200));
         g.fillRect(p.x,p.y,p.xsiz,p.ysiz);
         g.setColor(Color.red);
         if(s.appear)g.fillRect(s.x,s.y,s.xsiz,s.ysiz);
