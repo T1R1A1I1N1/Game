@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=LavaTile
+comment1.params=x\ y
+comment1.target=LavaTile(int,\ int)
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3

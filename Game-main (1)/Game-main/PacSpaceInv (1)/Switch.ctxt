@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=Switch
+comment1.params=x\ y\ xsiz\ ysiz
+comment1.target=Switch(int,\ int,\ int,\ int)
+numComments=2
