@@ -44,7 +44,10 @@ public class GameGraph  extends JPanel
             if(e.inv) g.setColor(Color.orange);
             else g.setColor(Color.yellow);
             g.fillRect(e.x,e.y,e.xsiz,e.ysiz);}
+        g.setColor(Color.black);
                     if(endgame[0]){g.drawString("Game Over",50,50);}
-
+        g.drawRect(0,550,540,30);
+        g.setColor(Color.red);
+        g.fillRect(0,550,(int)(((p.hp*1.0)/p.maxHP)*540),30);
     }
 }

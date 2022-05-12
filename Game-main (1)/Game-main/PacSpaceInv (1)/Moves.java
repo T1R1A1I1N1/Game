@@ -17,6 +17,11 @@ public abstract class Moves extends Base
       hp--;
     }
     
+    public void hit(int n){
+      invtim = 200;
+      hp-=n;
+    }
+    
     public void stuff(){
       invtim--;
       inv = (invtim>0);

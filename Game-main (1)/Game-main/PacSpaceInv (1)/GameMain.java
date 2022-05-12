@@ -104,18 +104,16 @@ public class GameMain implements ActionListener, KeyListener
   private void boxcollision(){
     boolean swim = true;
     boolean safe = true;
-    boolean spike = false;
     for(Tile[] g: map){
         for(Tile t: g){
         if(Stat.collision(t,p)) {
-          if(t.toString().equals("spike")) spike = true;
+          if(t.toString().equals("spike") && !p.inv) p.hit(((SpikeTile)t).dam);
           if(!t.toString().equals("water")) swim = false;
           if(!t.toString().equals("normal")) safe = false;
         }
       }
     }
     p.swim = swim;
-    if(spike) p.hit();
     if(safe){
       p.safex = p.x;
       p.safey = p.y;}
