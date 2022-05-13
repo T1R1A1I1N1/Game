@@ -2,11 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
-
+import java.io.*;
 public class GameMain implements ActionListener, KeyListener
 {
   JFrame f1;
-  JPanel main, sub, top;
+  JPanel main, sub;
   GameGraph g1;
   JButton b1,b2;
   boolean endgame,start;
@@ -14,7 +14,7 @@ public class GameMain implements ActionListener, KeyListener
   Player p;
   Sword s;
   ArrayList<Enemy> bad;
-  Hpgraph hg;
+  File f;
   public GameMain()
   {
     makeMap();
@@ -23,7 +23,9 @@ public class GameMain implements ActionListener, KeyListener
     game();
   }
   private void makeMap(){
-    map = new Tile[18][18];
+    f = new File("room1");
+    map = Stat.mapFile(f);
+    /*map = new Tile[18][18];
     for(int i = 1; i < map.length-1; i++){
     for(int j = 1; j < map.length-1; j++){
       map[i][j] = new NormalTile(i*30,j*30);}}
@@ -35,16 +37,17 @@ public class GameMain implements ActionListener, KeyListener
     map[10][11] = new WaterTile(300,330);
     map[11][10] = new WaterTile(330,300);
     map[11][11] = new WaterTile(330,330);
+    map[5][10] = new SpikeTile(150,300,1);
     for(int i = 0; i < map.length; i++){
       map[0][i] = new WallTile(0,i*30);
       map[17][i] = new WallTile(510,i*30);
       map[i][0] = new WallTile(i*30,0);
       map[i][17] = new WallTile(i*30,510);
-    }
+    }*/
     }
   private void setPanel()
   {
-    f1 = new JFrame("Graphics Example");
+    f1 = new JFrame("GAME!!!");
       f1.setSize(600,800);
       f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     Container c1 = f1.getContentPane();
@@ -58,23 +61,16 @@ public class GameMain implements ActionListener, KeyListener
     g1 = new GameGraph(map,p,s,bad);
       g1.addKeyListener(this);  
       
-    hg = new Hpgraph(p);
     
     sub = new JPanel(); 
       sub.add(b1);
       sub.add(b2);
-      //sub.add(hg);
-      
-    top = new JPanel();
-      top.add(hg);
-      top.setSize(100,50);
     
     main = new JPanel();
       main.setLayout(new BorderLayout());          
       main.setSize(500,500);
       main.add(g1,BorderLayout.CENTER);
       main.add(sub,BorderLayout.SOUTH);
-      main.add(top,BorderLayout.NORTH);
     c1.add(main);
     f1.show();
     f1.setResizable(false);
@@ -102,24 +98,34 @@ public class GameMain implements ActionListener, KeyListener
         imstuff();
         boxcollision();
         collision();
+        moveEnemy();
+        
         g1.repaint();
-        hg.repaint();
       }
     }
   }
   
+  private void moveEnemy(){
+    for(int i = 0; i < bad.size(); i++){
+      
+    }
+    }
   private void boxcollision(){
     boolean swim = true;
+    boolean safe = true;
     for(Tile[] g: map){
         for(Tile t: g){
         if(Stat.collision(t,p)) {
-          if(t.toString().equals("spike")) p.hit();
+          if(t.toString().equals("spike") && !p.inv) p.hit(((SpikeTile)t).dam);
           if(!t.toString().equals("water")) swim = false;
+          if(!t.toString().equals("normal")) safe = false;
         }
       }
     }
     p.swim = swim;
-    
+    if(safe){
+      p.safex = p.x;
+      p.safey = p.y;}
   }
   
   private void imstuff(){
@@ -128,7 +134,9 @@ public class GameMain implements ActionListener, KeyListener
       i--;}
     }
     p.stuff();
-    if(p.hp<=0) endgame = true;
+    if(p.hp<=0){ endgame = true;
+      g1.endGame();
+    }
     }
   
   private void swordStuff(){

@@ -6,4 +6,6 @@ comment2.params=a\ b
 comment2.target=boolean\ collision(Base,\ Base)
 comment3.params=m\ map
 comment3.target=boolean\ canMove(Moves,\ Tile[][])
-numComments=4
+comment4.params=f
+comment4.target=Tile[][]\ mapFile(java.io.File)
+numComments=5

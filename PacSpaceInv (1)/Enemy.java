@@ -8,5 +8,14 @@ public class Enemy extends Moves
     }
 
     public void fell(){dead = true;}
+    
+    public void move(){
+      x+= xdir;
+      y+= ydir;
+      if(xdir>0) xdir--;
+      if(xdir<0) xdir++;
+      if(ydir>0) ydir--;
+      if(ydir<0) ydir++;
+    }
 }
 

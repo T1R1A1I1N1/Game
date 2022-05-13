@@ -4,4 +4,6 @@ comment1.params=x\ y\ xsiz\ ysiz\ speed\ hp
 comment1.target=Enemy(int,\ int,\ int,\ int,\ int,\ int)
 comment2.params=
 comment2.target=void\ fell()
-numComments=3
+comment3.params=
+comment3.target=void\ move()
+numComments=4
